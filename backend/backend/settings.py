@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import pymysql
+
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'chat', # 추가
+    'chat', 
 ]
 
 MIDDLEWARE = [
@@ -76,8 +79,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test_chat',  # MySQL 데이터베이스 이름
+        'USER': 'root',       # MySQL 사용자명
+        'PASSWORD': '1208',   # MySQL 비밀번호
+        'HOST': 'localhost',           # MySQL 호스트 (로컬에서 실행하는 경우 'localhost' 또는 '127.0.0.1')
+        'PORT': '3306',                # MySQL 포트 (기본적으로 3306)
     }
 }
 
