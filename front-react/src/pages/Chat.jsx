@@ -57,7 +57,6 @@ const Chat = () => {
         if (message.trim() !== '') {
             // WebSocket을 통해 메시지 전송
             socketRef.current.send(JSON.stringify({message: message}));
-
             setMessage('');
         }
     };
@@ -68,17 +67,24 @@ const Chat = () => {
         }
     };
 
+    const scrollRef = useRef();
+      useEffect(() => {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }, [chatHistory])
+
+
   return (
     <div className='container'>
       <h1>1:1 채팅</h1>
       <div className='chat-container'>
-        <div className='chat-history'>
+        <div className='chat-history' ref={scrollRef}>
           {chatHistory.map((msg, index) => (
             <div className='message-bubble' key={index}>
-              {msg}
+              {username} {msg}
             </div>
           ))}
         </div>
+
         <div className='input-area'>
             <p>{username}님 </p>
             <input

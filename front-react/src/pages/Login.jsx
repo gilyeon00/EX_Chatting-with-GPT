@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './chat.css'
+import Cookies from 'js-cookie';
+
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -23,7 +25,7 @@ const Login = () => {
       .then((response) => {
         if (response.data.exists) {
           sessionStorage.setItem('username', username);
-          sessionStorage.setItem('userId', response.data.userId)
+          Cookies.set('userId', response.data.userId);
           navigate('/home');
         } else {
           console.log('회원이 존재하지 않습니다.');
