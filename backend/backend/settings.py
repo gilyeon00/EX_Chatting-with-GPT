@@ -81,11 +81,11 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test_chat',  # MySQL 데이터베이스 이름
-        'USER': 'root',       # MySQL 사용자명
-        'PASSWORD': '1208',   # MySQL 비밀번호
-        'HOST': 'localhost',           # MySQL 호스트 (로컬에서 실행하는 경우 'localhost' 또는 '127.0.0.1')
-        'PORT': '3306',                # MySQL 포트 (기본적으로 3306)
+        'NAME': 'test_chat',  
+        'USER': 'root',      
+        'PASSWORD': '1208',  
+        'HOST': 'localhost',          
+        'PORT': '3306',              
     }
 }
 

@@ -1,68 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './chat.css';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import axios from 'axios';
 
-const client = new W3CWebSocket('ws://localhost:8000/ws/chat/1');
 
 const Chat = () => {
-  const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
-  const username = sessionStorage.getItem("username");
+    const [message, setMessage] = useState('');
+    const [chatHistory, setChatHistory] = useState([]);
+    const username = sessionStorage.getItem("username");
+    // const userId = sessionStorage.getItem("userId")
+  
+    const socketRef = useRef(null);  // 새로운 ref 생성
 
-  useEffect ( () => {
-    axios
-        .post('http://localhost:8000/chat/check-chatroom', { 
-            username: username,
-            room_id: 1
+    useEffect(() => {
+      axios
+        .post('http://localhost:8000/chat/check-chatroom', {
+          username: username,
+          room_id: 1
         })
         .then(res => {
             console.log(res);
-            client.onopen = () => {
+            let socket = new WebSocket("ws://localhost:8000/ws/chat/1/");
+            socketRef.current = socket;  // socket을 ref에 저장
+
+            socket.onopen = function(e) {
                 console.log('WebSocket Client Connected');
             };
+          
+          socket.onmessage = function(event) {
+            console.log(`Data received from server: ${event.data}`);
+            setChatHistory(prevChatHistory => [...prevChatHistory, event.data]);
+          };
+          
+          socket.onclose = function(event) {
+            if (event.wasClean) {
+              console.log(`Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+            } else {
+              console.log('Connection died');
+            }
+          };
+          
+          socket.onerror = function(error) {
+            console.log(`Error ${error.message}`);
+          };
         })
         .catch(err => {
-            console.log(err);
-            client.close();
+          console.log(err);
         });
-  }, [])
+    }, []);
 
-  useEffect(() => {
-    // 웹소켓 연결
-    // client.onopen = () => {
-    //   console.log('WebSocket Client Connected');
-    // };
 
-    // 메시지 수신
-    client.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      const newChatHistory = [...chatHistory, data.message];
-      setChatHistory(newChatHistory);
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value);
     };
 
-    // 컴포넌트 언마운트 시 웹소켓 연결 해제
-    // return () => {
-    //   client.close();
-    // };
-  }, [chatHistory]);
+    const handleSendMessage = () => {
+        if (message.trim() !== '') {
+            // WebSocket을 통해 메시지 전송
+            socketRef.current.send(JSON.stringify({message: message}));
 
-  const handleMessageChange = (e) => {
-    setMessage(e.target.value);
-  };
+            setMessage('');
+        }
+    };
 
-  const handleSendMessage = () => {
-    if (message.trim() !== '') {
-      client.send(JSON.stringify({ message }));
-      setMessage('');
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSendMessage();
-    }
-  };
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+        handleSendMessage();
+        }
+    };
 
   return (
     <div className='container'>

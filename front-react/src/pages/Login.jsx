@@ -21,8 +21,9 @@ const Login = () => {
     axios
       .post('http://localhost:8000/user/check-username', { "username" : username })
       .then((response) => {
-        if (!response.data.exists) {
+        if (response.data.exists) {
           sessionStorage.setItem('username', username);
+          sessionStorage.setItem('userId', response.data.userId)
           navigate('/home');
         } else {
           console.log('회원이 존재하지 않습니다.');

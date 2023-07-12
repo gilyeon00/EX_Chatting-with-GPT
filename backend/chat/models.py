@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import Users
-
+from django.shortcuts import get_object_or_404
+from asgiref.sync import sync_to_async
 
 class Rooms(models.Model):
     room_id = models.AutoField(primary_key=True)
@@ -10,10 +11,15 @@ class Rooms(models.Model):
 
 class Chats(models.Model):
     chat_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     room_id = models.ForeignKey(Rooms, on_delete=models.CASCADE)
     content = models.TextField()
 
-    def save_chat_message(self, room_id, content):
-        self.room_id = room_id
+    async def save_chat_message(self, user_id, room_id, content):
+        # user = await sync_to_async(get_object_or_404)(Users, user_id=user_id)
+        room = await sync_to_async(get_object_or_404)(Rooms, room_id=room_id)  
+        # self.user_id = user
+        self.room_id = room
         self.content = content
-        self.save()
+        await sync_to_async(self.save)()
+

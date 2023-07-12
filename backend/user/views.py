@@ -7,14 +7,22 @@ import json
 def check_username(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = data.get('username')  # 클라이언트로부터 받은 'aaa'와 같은 문자열
-        user_exists = Users.objects.filter(username = username).exists()
+        username = data.get('username')
+        try:
+            user = Users.objects.get(username=username)
+            response_data = {
+                'userId' : user.user_id,
+                'username': username,
+                'exists': True
+            }
+        except Users.DoesNotExist:
+            print(username)
+            response_data = {
+                'userId': None,
+                'username': username,
+                'exists': False
+            }
 
-        response_data = {
-            'username': username,
-            'exists': user_exists
-        }
-        
         return JsonResponse(response_data)
     else:
         return JsonResponse({'error': 'Invalid request method'})
