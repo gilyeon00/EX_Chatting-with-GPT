@@ -11,7 +11,7 @@ const Home = () => {
 
     return (
         <div className='container'>
-            <div className='chat-container'>
+            <div className='chat-container' style={{ backgroundColor: '#bbd' }}>
                 <button onClick={handleOne}>
                     1:1 채팅
                 </button>

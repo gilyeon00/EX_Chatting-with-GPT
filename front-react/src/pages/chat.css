@@ -9,7 +9,7 @@
 }
 
 .chat-container{
-    background-color: #bbd;
+    /* background-color: rgb(236, 228, 155); */
     width: 50%;
     height: 50%;
     padding: 1rem;
@@ -21,7 +21,7 @@
 }
 
 .chat-history{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 80%;
     height: 70%;
     overflow: scroll;

@@ -38,7 +38,7 @@ const Login = () => {
 
   return (
     <div className="container">
-      <div className="chat-container">
+      <div className="chat-container" style={{ backgroundColor: '#bbd' }}>
         <input
           className="input"
           type="text"

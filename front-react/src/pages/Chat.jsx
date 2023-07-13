@@ -76,7 +76,7 @@ const Chat = () => {
   return (
     <div className='container'>
       <h1>1:1 채팅</h1>
-      <div className='chat-container'>
+      <div className='chat-container' style={{ backgroundColor: '#bbd' }}>
         <div className='chat-history' ref={scrollRef}>
           {chatHistory.map((msg, index) => (
             <div className='message-bubble' key={index}>
