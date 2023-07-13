@@ -1,25 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 const ChatWithGPT = () => {
     const username = sessionStorage.getItem("username");
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState('안녕 너의 소개를 해줘');
     const [chatHistory, setChatHistory] = useState([]);
+    const eventSource = new EventSource('http://localhost:8888/completionChat');
+   
+    useEffect(() => {
+        eventSource.onmessage = (event) => {
+            console.log(event.data)
+            setChatHistory((history) => [...history, event.data]);
+        };
 
-    const handleMessageChange = (e) => {
-        setMessage(e.target.value);
-    };
+        return () => {
+            eventSource.close();
+        };
+    }, []);
 
-    const handleSendMessage = () => {
-        if (message.trim() !== '') {
-            setMessage('');
-        }
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-        handleSendMessage();
-        }
-    };
 
     const scrollRef = useRef();
     useEffect(() => {
@@ -28,29 +26,13 @@ const ChatWithGPT = () => {
 
     return (
         <div className='container'>
-          <h1>심심이</h1>
-          <div className='chat-container' style={{ backgroundColor: 'rgb(255, 217, 142)' }}>
+          <div className='chat-container' style={{ backgroundColor: 'rgb(255, 217, 142)' , width: "90%", height: "70%"}}>
             <div className='chat-history' ref={scrollRef}>
-              
-            </div>
-    
-            <div className='input-area'>
-                <p>{username}님 </p>
-                <input
-                    className='input'
-                    type='text'
-                    placeholder='심심이에게 메시지를 입렵해보세요'
-                    value={message}
-                    onChange={handleMessageChange}
-                    onKeyDown={handleKeyDown}
-                />
-                <button onClick={handleSendMessage}>전송</button>
+                {chatHistory.map((chat, index) => <p key={index}>{chat}</p>)}
             </div>
           </div>
         </div>
-      );
-    };
-    
-    
+    );
+};
 
 export default ChatWithGPT;

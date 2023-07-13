@@ -9,6 +9,10 @@ const Home = () => {
         navigate('/chat/1');
       };
 
+    const handleTwo = (e) => {
+        navigate('/gpt')
+    }
+
     return (
         <div className='container'>
             <div className='chat-container' style={{ backgroundColor: '#bbd' }}>
@@ -16,7 +20,7 @@ const Home = () => {
                     1:1 채팅
                 </button>
 
-                <button>
+                <button onClick={handleTwo}>
                     GPT와의 채팅
                 </button>
             </div>

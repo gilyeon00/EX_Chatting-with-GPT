@@ -2,50 +2,34 @@ import os
 import flask
 import openai
 from flask import Flask
+from flask_cors import CORS
+
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 app = Flask(__name__)
+CORS(app)
+
+from flask import request
 
 
-@app.route('/')
-def home():
-    return """
-    <!DOCTYPE html>
-    <html>
-        <body>
-        <h1>response:</h1>
-        <div id="result"></div>
-        <script>
-            var source = new EventSource("/completion");
-            source.onmessage = function(event) {
-                document.getElementById("result").innerHTML += event.data + "<br>";
-            };
-        </script>
-        </body>
-    </html>
-    """
-
-@app.route('/completion', methods=['GET'])
-def completion_api_text():
-    def stream():
-        completion = openai.Completion.create(engine="text-davinci-003", prompt="Hello world", stream=True)
-        for line in completion:
-            yield 'data: %s\n\n' % line.choices[0].text
-    return flask.Response(stream(), mimetype='text/event-stream')
-
+def generate_chat_stream():
+    completion = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo', 
+        messages=[{"role": "user", "content": "What should I study as a new developer? I'm currently working on a mini project. " +
+                   "Please tell me what skills and features you would like to include. Please answer in Korean"}],
+        # 신입 개발자로서 어떤걸 공부하면 좋을까? 나는 현재 미니 프로젝트를 진행하고 있는데 넣으면 좋을 기술, 기능을 알려줘
+        stream=True)
+    for line in completion:
+        chunk = line['choices'][0].get('delta', {}).get('content', '')
+        if chunk:
+            data = 'data: %s\n' % chunk
+            app.logger.info(data)
+            yield data
 
 @app.route('/completionChat', methods=['GET'])
 def completion_api_chat():
-    def stream():
-        completion = openai.ChatCompletion.create(
-            model='gpt-3.5-turbo', 
-            messages=[{"role": "user", "content": "Hello world"}],
-            stream=True)
-        for line in completion:
-            chunk = line['choices'][0].get('delta', {}).get('content', '')
-            if chunk:
-                yield 'data: %s\n' % chunk
-    return flask.Response(stream(), mimetype='text/event-stream')
+    if request.method == 'GET':
+        return flask.Response(generate_chat_stream(), mimetype='text/event-stream')
 
 
 
