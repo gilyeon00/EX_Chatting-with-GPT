@@ -44,13 +44,17 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ORIGIN_ALLOW_ALL = False
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000', 
-    'http://localhost',  
-    'http://gilyeon.site',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000', 
+#     'http://localhost',  
+#     "http://localhost:8080",
+#     "http://localhost:80",
+#     'http://gilyeon.site',
+# ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'backend.urls'
 
