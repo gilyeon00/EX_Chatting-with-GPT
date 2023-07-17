@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+  db:
+    container_name: db
+    image: mysql
+    tty: true
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'test_chat'
+      MYSQL_ROOT_PASSWORD: '1234'
+      MYSQL_USER: 'test_user'
+      MYSQL_PASSWORD: '1234'
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+
+  backend:
+    build:
+      context: ./backend
+      args:
+        DJANGO_ALLOWED_HOSTS: "*"
+        DJANGO_SECRET_KEY: "*"
+        DJANGO_CORS_ORIGIN_WHITELIST: "*"
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    expose:
+      - 8000
+    volumes:
+      - ./backend/:/backend/
+    depends_on:
+      - db
+    restart: always    
+    tty: true
+
+  frontend:
+    build:
+      context: ./front-react
+    volumes:
+      - ./front-react/:/front-react
+      - build_folder:/front-react/build
+      - ./front-react/node_modules/:/front-react/node_modules
+    tty: true
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:8080
+    volumes:
+      - build_folder:/var/www/front-react
+      - ./nginx/log:/var/log/nginx
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  mysql-data:
+  build_folder:
