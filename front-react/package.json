@@ -40,10 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": [
-    "http://localhost:80",
-    "http://localhost",
-    "http://gilyeon.site",
-    "http://www.gilyeon.site"
-  ]
+  "proxy": "http://www.gilyeon.site"
 }
