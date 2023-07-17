@@ -15,6 +15,8 @@ services:
       - 3306:3306
     expose:
       - 3306
+    networks:
+      - app-tier
 
   backend:
     build:
@@ -28,13 +30,15 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: backend.settings
     restart: always  
-    ports:
-      - 8000:8000
+    # ports:
+    #   - 8000:8000
     expose:
       - 8000
     volumes:
       - ./backend/:/backend/  
     tty: true
+    networks:
+      - app-tier
 
   frontend:
     build:
@@ -45,7 +49,10 @@ services:
       - ./front-react/node_modules/:/front-react/node_modules
     environment:
       -  WDS_SOCKET_PORT=3000
+      - REACT_APP_BACKEND_URL= http://www.gilyeon.site
     tty: true
+    networks:
+      - app-tier
 
   nginx:
     build: ./nginx
@@ -57,7 +64,16 @@ services:
     depends_on:
       - backend
       - frontend
+    expose:
+      - 80
+    restart: always
+    networks:
+      - app-tier
 
 volumes:
   mysql-data:
   build_folder:
+
+networks:
+  app-tier:
+    driver: bridge
