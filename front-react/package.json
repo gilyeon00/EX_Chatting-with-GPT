@@ -43,6 +43,7 @@
   "proxy": [
     "http://localhost:80",
     "http://localhost",
-    "http://www.gilyeon.site"
+    "http://www.gilyeon.site",
+    "http://www.gilyeon.site:80"
   ]
 }
