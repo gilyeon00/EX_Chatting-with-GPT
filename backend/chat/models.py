@@ -1,15 +1,15 @@
 from django.db import models
-# import django 
+import django 
 # django.setup() 
 
-# from user.models import Users
+from user.models import Users
 from django.shortcuts import get_object_or_404
 from asgiref.sync import sync_to_async
 
 class Rooms(models.Model):
     room_id = models.AutoField(primary_key=True)
-    # user_id1 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='rooms1')
-    # user_id2 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='rooms2')
+    user_id1 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='rooms1')
+    user_id2 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='rooms2')
 
 
 class Chats(models.Model):
