@@ -18,4 +18,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY . ./
 RUN npm install
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
