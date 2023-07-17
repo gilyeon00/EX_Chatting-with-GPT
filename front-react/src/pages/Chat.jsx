@@ -13,13 +13,13 @@ const Chat = () => {
 
     useEffect(() => {
       axios
-        .post('http://gilyeon.site/api/chat/check-chatroom', {
+        .post('http://www.gilyeon.site/api/chat/check-chatroom', {
           username: username,
           room_id: 1
         })
         .then(res => {
             console.log(res);
-            let socket = new WebSocket("ws://gilyeon.site/ws/chat/1/");
+            let socket = new WebSocket("ws://www.gilyeon.site/ws/chat/1/");
             socketRef.current = socket;  // socket을 ref에 저장
 
             socket.onopen = function(e) {
