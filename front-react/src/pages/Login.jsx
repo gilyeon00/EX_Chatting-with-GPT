@@ -21,11 +21,12 @@ const Login = () => {
 
   const handleLogin = () => {
     axios
-      .post('http://localhost:8000/user/check-username', { "username" : username })
+      .post('http://localhost/api/user/check-username', { "username" : username })
       .then((response) => {
         if (response.data.exists) {
           sessionStorage.setItem('username', username);
           Cookies.set('userId', response.data.userId);
+          alert('로그인에 성공하였습니다.')
           navigate('/home');
         } else {
           console.log('회원이 존재하지 않습니다.');
