@@ -24,7 +24,7 @@ services:
         DJANGO_SECRET_KEY: "*"
         DJANGO_CORS_ORIGIN_WHITELIST: "*"
     # command: python manage.py runserver 0.0.0.0:8000
-    command: sh -c "python manage.py migrate && daphne -b 0.0.0.0 -p 8000 backend.asgi:application"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && daphne -b 0.0.0.0 -p 8000 backend.asgi:application"
     environment:
       DJANGO_SETTINGS_MODULE: backend.settings
     restart: always  
