@@ -49,7 +49,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000', 
     'http://localhost',  
-    'http://gilyeon.site'
+    'http://gilyeon.site',
+    'http://52.78.236.58/'
 ]
 
 ROOT_URLCONF = 'backend.urls'
