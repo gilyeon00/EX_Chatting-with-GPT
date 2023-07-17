@@ -13,7 +13,7 @@ const Chat = () => {
 
     useEffect(() => {
       axios
-        .post('http://www.gilyeon.site:80/api/chat/check-chatroom', {
+        .post('http://www.gilyeon.site/api/chat/check-chatroom', {
           username: username,
           room_id: 1
         })

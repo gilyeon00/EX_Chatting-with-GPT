@@ -21,7 +21,7 @@ const Login = () => {
 
   const handleLogin = () => {
     axios
-      .post('http://www.gilyeon.site:80/api/user/check-username', { "username" : username })
+      .post('http://www.gilyeon.site/api/user/check-username', { "username" : username })
       .then((response) => {
         if (response.data.exists) {
           sessionStorage.setItem('username', username);
