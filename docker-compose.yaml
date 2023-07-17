@@ -48,8 +48,7 @@ services:
       - build_folder:/front-react/build
       - ./front-react/node_modules/:/front-react/node_modules
     environment:
-      -  WDS_SOCKET_PORT=3000
-      - REACT_APP_BACKEND_URL= http://www.gilyeon.site
+      -  WDS_SOCKET_PORT=0
     tty: true
     networks:
       - app-tier
