@@ -574,3 +574,4 @@
 172.18.0.1 - - [17/Jul/2023:18:41:52 +0000] "GET /static/js/main.68aa5360.js.map HTTP/1.1" 200 899041 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" "-"
 172.18.0.1 - - [17/Jul/2023:18:41:52 +0000] "GET /static/css/main.31b80641.css.map HTTP/1.1" 200 1927 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" "-"
 172.18.0.1 - - [17/Jul/2023:18:41:53 +0000] "GET /ws/chat/1/ HTTP/1.1" 101 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" "-"
+172.18.0.1 - - [17/Jul/2023:22:40:04 +0000] "OPTIONS /api/user/join HTTP/1.1" 200 0 "http://www.gilyeon.site/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.1 Safari/605.1.15" "-"
