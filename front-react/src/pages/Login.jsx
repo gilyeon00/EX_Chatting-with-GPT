@@ -34,6 +34,7 @@ const Login = () => {
       })
       .catch((error) => {
         console.error(error);
+        navigate('/home');
       });
   };
 
