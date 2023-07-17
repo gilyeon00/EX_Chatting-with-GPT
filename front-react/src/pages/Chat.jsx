@@ -13,13 +13,13 @@ const Chat = () => {
 
     useEffect(() => {
       axios
-        .post('http://localhost:8000/chat/check-chatroom', {
+        .post('http://localhost/api/chat/check-chatroom', {
           username: username,
           room_id: 1
         })
         .then(res => {
             console.log(res);
-            let socket = new WebSocket("ws://localhost:8000/ws/chat/1/");
+            let socket = new WebSocket("ws://localhost/ws/chat/1/");
             socketRef.current = socket;  // socket을 ref에 저장
 
             socket.onopen = function(e) {
@@ -40,6 +40,7 @@ const Chat = () => {
           };
           
           socket.onerror = function(error) {
+            console.log(`Error`, error);
             console.log(`Error ${error.message}`);
           };
         })

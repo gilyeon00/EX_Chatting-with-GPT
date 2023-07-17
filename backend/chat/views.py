@@ -14,7 +14,7 @@ class CheckChatroomView(View):
     def post(self, request):
         try:
             data = json.loads(request.body)
-            username = data.get('username')
+            # username = data.get('username')
             room_id = data.get('room_id')
 
             if not room_id:
@@ -22,8 +22,8 @@ class CheckChatroomView(View):
 
             room = Rooms.objects.filter(room_id=room_id).first()
 
-            if not room:
-                return JsonResponse({'error': 'Room does not exist'}, status=404)
+            # if not room:
+            #     return JsonResponse({'error': 'Room does not exist'}, status=404)
 
 
             return JsonResponse({'success': 'User connected to the room'}, status=200)

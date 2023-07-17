@@ -1,9 +1,8 @@
 version: "3"
 
 services:
-  db:
-    container_name: db
-    image: mysql
+  mysql-db:
+    image: mysql/mysql-server:8.0
     tty: true
     volumes:
       - mysql-data:/var/lib/mysql
@@ -24,16 +23,17 @@ services:
         DJANGO_ALLOWED_HOSTS: "*"
         DJANGO_SECRET_KEY: "*"
         DJANGO_CORS_ORIGIN_WHITELIST: "*"
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: daphne -b 0.0.0.0 -p 8000 backend.asgi:application
+    environment:
+      DJANGO_SETTINGS_MODULE: backend.settings
+    restart: always  
     ports:
       - 8000:8000
     expose:
       - 8000
     volumes:
-      - ./backend/:/backend/
-    depends_on:
-      - db
-    restart: always    
+      - ./backend/:/backend/  
     tty: true
 
   frontend:
@@ -43,6 +43,8 @@ services:
       - ./front-react/:/front-react
       - build_folder:/front-react/build
       - ./front-react/node_modules/:/front-react/node_modules
+    environment:
+      -  WDS_SOCKET_PORT=3000
     tty: true
 
   nginx:

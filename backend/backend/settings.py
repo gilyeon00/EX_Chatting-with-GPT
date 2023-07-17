@@ -47,7 +47,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # 클라이언트의 주소
+    'http://localhost:3000', 
+    'http://localhost',  
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -84,7 +85,7 @@ DATABASES = {
         'NAME': 'test_chat',  
         'USER': 'test_user',      
         'PASSWORD': '1234',  
-        'HOST': 'db',          
+        'HOST': 'mysql-db',          
         'PORT': '3306',              
     }
 }

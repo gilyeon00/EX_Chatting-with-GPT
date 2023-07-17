@@ -5,8 +5,8 @@ from django.http import StreamingHttpResponse, HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('user.urls')),
-    path('chat/', include('chat.urls')),
+    path('api/user/', include('user.urls')),
+    path('api/chat/', include('chat.urls')),
 ]
 
 

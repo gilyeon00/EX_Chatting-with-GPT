@@ -1,4 +1,7 @@
 from django.db import models
+import django 
+django.setup() 
+
 from user.models import Users
 from django.shortcuts import get_object_or_404
 from asgiref.sync import sync_to_async
