@@ -29,7 +29,7 @@ const Join = () => {
 
   const handleJoin = () => {
     axios
-      .post('http://www.gilyeon.site/api/user/join', { 
+      .post('/api/user/join', { 
         "username" : username,
         "password" : password })
         .then((response) => {
